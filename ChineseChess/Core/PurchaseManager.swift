@@ -122,6 +122,9 @@ class PurchaseManager: ObservableObject {
     // MARK: - Entitlement
 
     func updateEntitlementStatus() async {
+        #if DEBUG
+        isPro = true
+        #else
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result,
                transaction.productID == productID,
@@ -131,6 +134,7 @@ class PurchaseManager: ObservableObject {
             }
         }
         isPro = false
+        #endif
     }
 
     // MARK: - Transaction Listener
