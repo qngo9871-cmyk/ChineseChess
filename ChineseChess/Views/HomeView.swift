@@ -3,9 +3,12 @@ import SwiftUI
 /// Home screen with game mode selection.
 struct HomeView: View {
 
-    @State private var selectedDifficulty: AIDifficulty = .medium
+    @EnvironmentObject var purchaseManager: PurchaseManager
+    @State private var selectedDifficulty: AIDifficulty = .beginner
     @State private var navigateToAI = false
     @State private var navigateToLocal = false
+    @State private var showUpgrade = false
+    @State private var upgradeFeature = ""
 
     var body: some View {
         NavigationStack {
@@ -25,14 +28,25 @@ struct HomeView: View {
                 VStack(spacing: 12) {
                     Picker("Difficulty", selection: $selectedDifficulty) {
                         ForEach(AIDifficulty.allCases) { level in
-                            Text(level.rawValue).tag(level)
+                            HStack {
+                                Text(level.rawValue)
+                                if level.requiresPro {
+                                    Image(systemName: "lock.fill")
+                                }
+                            }
+                            .tag(level)
                         }
                     }
                     .pickerStyle(.segmented)
                     .frame(maxWidth: 280)
 
                     Button {
-                        navigateToAI = true
+                        if selectedDifficulty.requiresPro && !purchaseManager.isPro {
+                            upgradeFeature = "\(selectedDifficulty.rawValue) difficulty"
+                            showUpgrade = true
+                        } else {
+                            navigateToAI = true
+                        }
                     } label: {
                         Label("Play vs AI", systemImage: "cpu")
                             .frame(maxWidth: 220)
@@ -43,15 +57,34 @@ struct HomeView: View {
 
                 // Local two-player
                 Button {
-                    navigateToLocal = true
+                    if !purchaseManager.isPro {
+                        upgradeFeature = "Play vs Friend"
+                        showUpgrade = true
+                    } else {
+                        navigateToLocal = true
+                    }
                 } label: {
-                    Label("Play vs Friend", systemImage: "person.2")
-                        .frame(maxWidth: 220)
+                    HStack {
+                        Label("Play vs Friend", systemImage: "person.2")
+                            .frame(maxWidth: 190)
+                        if !purchaseManager.isPro {
+                            Image(systemName: "lock.fill")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.large)
 
                 Spacer()
+
+                if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+                   let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+                    Text("v\(version) (\(build))")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
             }
             .padding()
             .navigationDestination(isPresented: $navigateToAI) {
@@ -60,10 +93,15 @@ struct HomeView: View {
             .navigationDestination(isPresented: $navigateToLocal) {
                 GameView()
             }
+            .sheet(isPresented: $showUpgrade) {
+                UpgradeView(feature: upgradeFeature)
+                    .environmentObject(purchaseManager)
+            }
         }
     }
 }
 
 #Preview {
     HomeView()
+        .environmentObject(PurchaseManager())
 }

@@ -18,6 +18,9 @@
 		A10000090000000000000009 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000090000000000000009 /* GameView.swift */; };
 		A1000010000000000000000A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000010000000000000000A /* HomeView.swift */; };
 		A1000011000000000000000B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A2000011000000000000000B /* PrivacyInfo.xcprivacy */; };
+		A1000012000000000000000C /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000012000000000000000C /* PurchaseManager.swift */; };
+		A1000013000000000000000D /* UpgradeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000013000000000000000D /* UpgradeView.swift */; };
+		A1000014000000000000000E /* Products.storekit in Resources */ = {isa = PBXBuildFile; fileRef = A2000014000000000000000E /* Products.storekit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		A20000090000000000000009 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		A2000010000000000000000A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A2000011000000000000000B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A2000012000000000000000C /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		A2000013000000000000000D /* UpgradeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeView.swift; sourceTree = "<group>"; };
+		A2000014000000000000000E /* Products.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Products.storekit; sourceTree = "<group>"; };
 		A30000010000000000000001 /* ChineseChess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChineseChess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -63,6 +69,7 @@
 				A50000040000000000000004 /* Views */,
 				A20000030000000000000003 /* Assets.xcassets */,
 				A2000011000000000000000B /* PrivacyInfo.xcprivacy */,
+				A2000014000000000000000E /* Products.storekit */,
 				A50000060000000000000006 /* Preview Content */,
 			);
 			path = ChineseChess;
@@ -75,6 +82,7 @@
 				A20000060000000000000006 /* Board.swift */,
 				A20000070000000000000007 /* Piece.swift */,
 				A20000080000000000000008 /* AIEngine.swift */,
+				A2000012000000000000000C /* PurchaseManager.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -84,6 +92,7 @@
 			children = (
 				A20000090000000000000009 /* GameView.swift */,
 				A2000010000000000000000A /* HomeView.swift */,
+				A2000013000000000000000D /* UpgradeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -183,6 +192,8 @@
 				A10000080000000000000008 /* AIEngine.swift in Sources */,
 				A10000090000000000000009 /* GameView.swift in Sources */,
 				A1000010000000000000000A /* HomeView.swift in Sources */,
+				A1000012000000000000000C /* PurchaseManager.swift in Sources */,
+				A1000013000000000000000D /* UpgradeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,7 +325,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"ChineseChess/Preview Content\"";
 				DEVELOPMENT_TEAM = SM99L22Q84;
 				ENABLE_PREVIEWS = YES;
@@ -344,7 +355,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"ChineseChess/Preview Content\"";
 				DEVELOPMENT_TEAM = SM99L22Q84;
 				ENABLE_PREVIEWS = YES;

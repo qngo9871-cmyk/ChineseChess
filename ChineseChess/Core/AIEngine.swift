@@ -9,6 +9,14 @@ enum AIDifficulty: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
+    var requiresPro: Bool {
+        switch self {
+        case .beginner: return false
+        case .medium:   return true
+        case .expert:   return true
+        }
+    }
+
     var depth: Int {
         switch self {
         case .beginner: return 3

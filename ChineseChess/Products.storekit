@@ -1,0 +1,36 @@
+{
+  "identifier" : "8A3F2B1E-4D5C-6E7F-8A9B-0C1D2E3F4A5B",
+  "type" : "com.apple.storekit-configuration",
+  "version" : 3,
+  "products" : [
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "D1E2F3A4-B5C6-7D8E-9F0A-1B2C3D4E5F6A",
+      "localizations" : [
+        {
+          "description" : "Unlock Medium & Expert AI and Play vs Friend",
+          "displayName" : "Chinese Chess Pro Unlock",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.quyenngo.chinesechess.pro",
+      "referenceName" : "Chinese Chess Pro Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6743362492",
+    "_developerTeamID" : "SM99L22Q84",
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      }
+    ]
+  }
+}
