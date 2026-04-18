@@ -39,6 +39,12 @@ struct HomeView: View {
                     }
                     .pickerStyle(.segmented)
                     .frame(maxWidth: 280)
+                    .onChange(of: selectedDifficulty) { _, newValue in
+                        if newValue.requiresPro && !purchaseManager.isPro {
+                            upgradeFeature = "\(newValue.rawValue) difficulty"
+                            showUpgrade = true
+                        }
+                    }
 
                     Button {
                         if selectedDifficulty.requiresPro && !purchaseManager.isPro {
