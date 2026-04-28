@@ -20,8 +20,9 @@ Native iOS app for playing Xiangqi (Chinese Chess). Play vs AI or two-player loc
 ## Current State
 - Core game engine and UI built
 - In-app purchase (Pro unlock) implemented with StoreKit 2
-- App submitted to App Store (v1.0, build 10 next); rejected once for Guideline 2.1(b) — IAP not linked to version page, now resolved
-- Build number set to 10 locally; builds 1–9 already uploaded to App Store Connect
+- App is live on App Store (v1.0); build 9 rejected for Guideline 2.1(b) — IAP not linked to version page, now resolved
+- v1.0.1 build 11 archived 2026-04-28 with AI improvements + IAP fix; pending upload to App Store Connect as a new version
+- AI rework (2026-04-28): tropism + king-mobility eval terms drive endgame to checkmate; capture-priority move ordering for faster alpha-beta; repetition tracking (last 8 position hashes, –150 penalty) to stop piece-shuffling; Expert reduced 5→4 with Medium gaining 5% blunder for distinct difficulty ladder
 
 ## Instructions for Claude Code
 At the end of every session, update the Current State section to reflect progress made.

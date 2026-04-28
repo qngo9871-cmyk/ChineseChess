@@ -30,7 +30,7 @@ struct HomeView: View {
                         ForEach(AIDifficulty.allCases) { level in
                             HStack {
                                 Text(level.rawValue)
-                                if level.requiresPro {
+                                if level.requiresPro && !purchaseManager.isPro {
                                     Image(systemName: "lock.fill")
                                 }
                             }
