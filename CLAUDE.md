@@ -18,6 +18,7 @@ Native iOS app for playing Xiangqi (Chinese Chess). Play vs AI or two-player loc
 - Traditional board with river, palace, all 7 piece types
 
 ## Current State
+- **2026-07-07 — v1.0.3 (build 13) screenshot rework, SUBMITTED (WAITING_FOR_REVIEW).** New 5-shot best-first set in `screenshots/v2/` (home / authentic board / developed opening / tap-to-see-legal-moves / mid-battle; cinnabar band) via `capture_shots.py` at repo root. Added `CC_CAPTURE=home|board|opening|select|midgame` DEBUG hook: `GameModel.captureSetup` (a `playOpening` 8-move all-legal development sequence + development-biased legal `selfPlay` + `forceSelect` to show legal-move dots) driven from `GameView`/`HomeView` `onAppear` — all `#if DEBUG`, inert in production. DEBUG forces isPro (no locks). Bumped pbxproj MARKETING_VERSION 1.0.2→1.0.3 / CURRENT_PROJECT_VERSION 12→13. Resubmitted via `~/asc-tools/new_version.py` + `replace_shots.py` (Pro IAP already approved → no re-tick).
 - Core game engine and UI built
 - In-app purchase (Pro unlock) implemented with StoreKit 2
 - App is live on App Store (v1.0); build 9 rejected for Guideline 2.1(b) — IAP not linked to version page, now resolved

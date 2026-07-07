@@ -103,6 +103,15 @@ struct HomeView: View {
                 UpgradeView(feature: upgradeFeature)
                     .environmentObject(purchaseManager)
             }
+            .onAppear {
+                #if DEBUG
+                // Screenshot capture: any CC_CAPTURE other than "home" jumps into a
+                // local (no-AI) game so the seeded board holds still. Inert in production.
+                if let name = ProcessInfo.processInfo.environment["CC_CAPTURE"], name != "home" {
+                    navigateToLocal = true
+                }
+                #endif
+            }
         }
     }
 }

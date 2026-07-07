@@ -53,6 +53,13 @@ struct GameView: View {
                 showEndAlert = true
             }
         }
+        .onAppear {
+            #if DEBUG
+            if let name = ProcessInfo.processInfo.environment["CC_CAPTURE"], name != "home" {
+                game.captureSetup(name)
+            }
+            #endif
+        }
     }
 
     // MARK: - Turn indicator
