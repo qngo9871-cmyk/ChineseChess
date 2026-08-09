@@ -14,10 +14,12 @@ struct UpgradeView: View {
                 .font(.system(size: 48))
                 .foregroundStyle(.secondary)
 
-            Text("Unlock Full Game")
+            Text(purchaseManager.trialActive ? "Unlock Full Game" : "Your Free Trial Has Ended")
                 .font(.title2.bold())
 
-            Text("\(feature) is available with the full version.")
+            Text(purchaseManager.trialActive
+                 ? "\(feature) is available with the full version."
+                 : "Your 7-day free trial is over. Unlock the full game to keep playing \(feature).")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -29,7 +31,7 @@ struct UpgradeView: View {
                 HStack(spacing: 6) {
                     Image(systemName: "checkmark")
                         .foregroundColor(.green)
-                    Text("Medium & Expert AI difficulty")
+                    Text("Beginner, Medium & Expert AI")
                         .font(.subheadline)
                 }
                 HStack(spacing: 6) {

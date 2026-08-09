@@ -10,6 +10,12 @@ struct HomeView: View {
     @State private var showUpgrade = false
     @State private var upgradeFeature = ""
 
+    private func isLocked(_ level: AIDifficulty) -> Bool {
+        if purchaseManager.isPro { return false }
+        if level.requiresPro { return true }
+        return !purchaseManager.trialActive
+    }
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 28) {
@@ -22,6 +28,12 @@ struct HomeView: View {
                     .font(.title2)
                     .foregroundStyle(.secondary)
 
+                if !purchaseManager.isPro && purchaseManager.trialActive {
+                    Text("Free trial — \(purchaseManager.trialDaysRemaining) day\(purchaseManager.trialDaysRemaining == 1 ? "" : "s") left")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
                 Spacer()
 
                 // AI game section
@@ -30,7 +42,7 @@ struct HomeView: View {
                         ForEach(AIDifficulty.allCases) { level in
                             HStack {
                                 Text(level.rawValue)
-                                if level.requiresPro && !purchaseManager.isPro {
+                                if isLocked(level) {
                                     Image(systemName: "lock.fill")
                                 }
                             }
@@ -40,14 +52,14 @@ struct HomeView: View {
                     .pickerStyle(.segmented)
                     .frame(maxWidth: 280)
                     .onChange(of: selectedDifficulty) { _, newValue in
-                        if newValue.requiresPro && !purchaseManager.isPro {
+                        if isLocked(newValue) {
                             upgradeFeature = "\(newValue.rawValue) difficulty"
                             showUpgrade = true
                         }
                     }
 
                     Button {
-                        if selectedDifficulty.requiresPro && !purchaseManager.isPro {
+                        if isLocked(selectedDifficulty) {
                             upgradeFeature = "\(selectedDifficulty.rawValue) difficulty"
                             showUpgrade = true
                         } else {
