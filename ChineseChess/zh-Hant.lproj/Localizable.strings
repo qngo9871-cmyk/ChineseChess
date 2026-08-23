@@ -1,0 +1,57 @@
+/* Home */
+"home.title" = "中國象棋";
+"home.trial" = "免費試用 — 剩餘 %d 天";
+"home.difficulty" = "難度";
+"home.playvsai" = "對戰電腦";
+"home.playvsfriend" = "雙人對戰";
+"home.howtoplay" = "玩法說明";
+
+/* Difficulty levels */
+"difficulty.beginner" = "初級";
+"difficulty.medium" = "中級";
+"difficulty.expert" = "高級";
+
+/* Upgrade feature descriptions */
+"upgrade.feature.difficulty" = "%@難度";
+
+/* In-game */
+"game.newgame" = "新局";
+"game.ok" = "確定";
+"game.resign" = "認輸";
+"game.red" = "紅方";
+"game.black" = "黑方";
+"game.wins" = "%@獲勝！";
+"game.checkmate" = "將死";
+"game.stalemate" = "困斃 — 和局";
+"game.incheck" = "%@被將軍";
+"game.turn" = "輪到%@";
+"game.winsbycheckmate" = "%@以將死獲勝！";
+"game.checkmatebang" = "將死！";
+"game.stalematebang" = "困斃 — 和局！";
+
+/* Upgrade / paywall */
+"upgrade.title" = "解鎖完整版";
+"upgrade.title.trialended" = "免費試用已結束";
+"upgrade.subtitle" = "完整版才能使用%@。";
+"upgrade.subtitle.trialended" = "你的 7 天免費試用已結束，解鎖完整版即可繼續遊玩%@。";
+"upgrade.whatyouget" = "解鎖內容：";
+"upgrade.feature1" = "初級、中級、高級電腦難度";
+"upgrade.feature2" = "雙人對戰模式";
+"upgrade.unlock" = "解鎖完整版 — %@";
+"upgrade.loadfailed" = "無法載入購買選項。";
+"upgrade.checkconnection" = "請檢查網路連線後再試一次。";
+"upgrade.tryagain" = "重試";
+"upgrade.loading" = "載入中…";
+"upgrade.restore" = "恢復購買";
+
+/* Onboarding */
+"onboarding.page1.title" = "兩軍對壘，一河相隔";
+"onboarding.page1.body" = "象棋是一款有兩千年歷史的中國策略遊戲，雙方在被楚河漢界分隔的 9×10 棋盤上對戰。吃掉對方的將（帥）即可獲勝。";
+"onboarding.page2.title" = "將帥的九宮";
+"onboarding.page2.body" = "雙方各有一個 3×3 的九宮，將（帥）與士只能在九宮內活動 — 雙方的將帥也不能在同一直線上直接對望，中間必須有其他棋子阻隔。";
+"onboarding.page3.title" = "七種棋子";
+"onboarding.page3.body" = "車（俥）走法如直線；炮（砲）走法相同，但吃子時必須隔一個棋子；馬（傌）走「日」字形，可被蹩馬腳；象（相）不能過河。";
+"onboarding.page4.title" = "將死取勝";
+"onboarding.page4.body" = "將死對方的將（帥）即可獲勝 — 讓對方無棋可走。當將帥受到直接威脅時，畫面會顯示紅色「將軍」提示。";
+"onboarding.next" = "下一步";
+"onboarding.start" = "開始遊戲";

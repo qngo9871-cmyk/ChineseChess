@@ -155,7 +155,13 @@ class PurchaseManager: ObservableObject {
 
     func updateEntitlementStatus() async {
         #if DEBUG
-        isPro = true
+        // Double-gating bug fix (2026-08-24, portfolio-wide compliance-gate finding):
+        // a bare `isPro = true` here masked the real trial/free-tier state on every
+        // Debug run and every "home" screenshot capture, the same class of bug already
+        // fixed in SamLoc/Fanorona/Dara/Surakarta. Only force-unlock for capture
+        // scenarios that are supposed to show unlocked gameplay.
+        let capture = ProcessInfo.processInfo.environment["CC_CAPTURE"]
+        isPro = capture != nil && capture != "home"
         #else
         for await result in Transaction.currentEntitlements {
             if case .verified(let transaction) = result,

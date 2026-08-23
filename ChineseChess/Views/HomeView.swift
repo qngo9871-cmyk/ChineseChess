@@ -4,11 +4,13 @@ import SwiftUI
 struct HomeView: View {
 
     @EnvironmentObject var purchaseManager: PurchaseManager
+    @EnvironmentObject var loc: LocalizationManager
     @State private var selectedDifficulty: AIDifficulty = .beginner
     @State private var navigateToAI = false
     @State private var navigateToLocal = false
     @State private var showUpgrade = false
     @State private var upgradeFeature = ""
+    @State private var showHowToPlay = false
 
     private func isLocked(_ level: AIDifficulty) -> Bool {
         if purchaseManager.isPro { return false }
@@ -22,14 +24,14 @@ struct HomeView: View {
                 Spacer()
 
                 // Title
-                Text("Chinese Chess")
+                Text(L("home.title"))
                     .font(.largeTitle.bold())
                 Text("象棋  Xiangqi")
                     .font(.title2)
                     .foregroundStyle(.secondary)
 
                 if !purchaseManager.isPro && purchaseManager.trialActive {
-                    Text("Free trial — \(purchaseManager.trialDaysRemaining) day\(purchaseManager.trialDaysRemaining == 1 ? "" : "s") left")
+                    Text(String(format: L("home.trial"), purchaseManager.trialDaysRemaining))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -38,10 +40,10 @@ struct HomeView: View {
 
                 // AI game section
                 VStack(spacing: 12) {
-                    Picker("Difficulty", selection: $selectedDifficulty) {
+                    Picker(L("home.difficulty"), selection: $selectedDifficulty) {
                         ForEach(AIDifficulty.allCases) { level in
                             HStack {
-                                Text(level.rawValue)
+                                Text(L(level.titleKey))
                                 if isLocked(level) {
                                     Image(systemName: "lock.fill")
                                 }
@@ -53,20 +55,20 @@ struct HomeView: View {
                     .frame(maxWidth: 280)
                     .onChange(of: selectedDifficulty) { _, newValue in
                         if isLocked(newValue) {
-                            upgradeFeature = "\(newValue.rawValue) difficulty"
+                            upgradeFeature = String(format: L("upgrade.feature.difficulty"), L(newValue.titleKey))
                             showUpgrade = true
                         }
                     }
 
                     Button {
                         if isLocked(selectedDifficulty) {
-                            upgradeFeature = "\(selectedDifficulty.rawValue) difficulty"
+                            upgradeFeature = String(format: L("upgrade.feature.difficulty"), L(selectedDifficulty.titleKey))
                             showUpgrade = true
                         } else {
                             navigateToAI = true
                         }
                     } label: {
-                        Label("Play vs AI", systemImage: "cpu")
+                        Label(L("home.playvsai"), systemImage: "cpu")
                             .frame(maxWidth: 220)
                     }
                     .buttonStyle(.borderedProminent)
@@ -76,14 +78,14 @@ struct HomeView: View {
                 // Local two-player
                 Button {
                     if !purchaseManager.isPro {
-                        upgradeFeature = "Play vs Friend"
+                        upgradeFeature = L("home.playvsfriend")
                         showUpgrade = true
                     } else {
                         navigateToLocal = true
                     }
                 } label: {
                     HStack {
-                        Label("Play vs Friend", systemImage: "person.2")
+                        Label(L("home.playvsfriend"), systemImage: "person.2")
                             .frame(maxWidth: 190)
                         if !purchaseManager.isPro {
                             Image(systemName: "lock.fill")
@@ -95,7 +97,19 @@ struct HomeView: View {
                 .buttonStyle(.bordered)
                 .controlSize(.large)
 
+                Button {
+                    showHowToPlay = true
+                } label: {
+                    Text(L("home.howtoplay"))
+                        .font(.subheadline)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.blue)
+
                 Spacer()
+
+                LanguageSwitcher()
+                    .frame(maxWidth: 280)
 
                 if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
                    let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
@@ -114,12 +128,22 @@ struct HomeView: View {
             .sheet(isPresented: $showUpgrade) {
                 UpgradeView(feature: upgradeFeature)
                     .environmentObject(purchaseManager)
+                    .environmentObject(loc)
+            }
+            .sheet(isPresented: $showHowToPlay) {
+                OnboardingView(onFinished: { showHowToPlay = false })
+                    .environmentObject(loc)
             }
             .onAppear {
                 #if DEBUG
-                // Screenshot capture: any CC_CAPTURE other than "home" jumps into a
-                // local (no-AI) game so the seeded board holds still. Inert in production.
-                if let name = ProcessInfo.processInfo.environment["CC_CAPTURE"], name != "home" {
+                // Screenshot/QA capture hooks, inert in production:
+                // - CC_SHOW_PAYWALL: force the upgrade sheet open (for paywall screenshots).
+                // - CC_CAPTURE != "home": jump into a local (no-AI) game so the seeded
+                //   board holds still for gameplay screenshots.
+                if ProcessInfo.processInfo.environment["CC_SHOW_PAYWALL"] != nil {
+                    upgradeFeature = L("home.playvsfriend")
+                    showUpgrade = true
+                } else if let name = ProcessInfo.processInfo.environment["CC_CAPTURE"], name != "home" {
                     navigateToLocal = true
                 }
                 #endif
@@ -131,4 +155,5 @@ struct HomeView: View {
 #Preview {
     HomeView()
         .environmentObject(PurchaseManager())
+        .environmentObject(LocalizationManager.shared)
 }

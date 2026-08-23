@@ -14,30 +14,30 @@ struct UpgradeView: View {
                 .font(.system(size: 48))
                 .foregroundStyle(.secondary)
 
-            Text(purchaseManager.trialActive ? "Unlock Full Game" : "Your Free Trial Has Ended")
+            Text(purchaseManager.trialActive ? L("upgrade.title") : L("upgrade.title.trialended"))
                 .font(.title2.bold())
 
             Text(purchaseManager.trialActive
-                 ? "\(feature) is available with the full version."
-                 : "Your 7-day free trial is over. Unlock the full game to keep playing \(feature).")
+                 ? String(format: L("upgrade.subtitle"), feature)
+                 : String(format: L("upgrade.subtitle.trialended"), feature))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
 
             VStack(spacing: 8) {
-                Text("What you get:")
+                Text(L("upgrade.whatyouget"))
                     .font(.subheadline.bold())
                 HStack(spacing: 6) {
                     Image(systemName: "checkmark")
                         .foregroundColor(.green)
-                    Text("Beginner, Medium & Expert AI")
+                    Text(L("upgrade.feature1"))
                         .font(.subheadline)
                 }
                 HStack(spacing: 6) {
                     Image(systemName: "checkmark")
                         .foregroundColor(.green)
-                    Text("Play vs Friend mode")
+                    Text(L("upgrade.feature2"))
                         .font(.subheadline)
                 }
             }
@@ -60,7 +60,7 @@ struct UpgradeView: View {
                             ProgressView()
                                 .frame(maxWidth: .infinity)
                         } else {
-                            Text("Unlock Full Game — \(product.displayPrice)")
+                            Text(String(format: L("upgrade.unlock"), product.displayPrice))
                                 .fontWeight(.semibold)
                                 .frame(maxWidth: .infinity)
                         }
@@ -70,25 +70,25 @@ struct UpgradeView: View {
                     .disabled(purchaseManager.isPurchasing)
                 } else if purchaseManager.productLoadFailed {
                     VStack(spacing: 8) {
-                        Text("Unable to load purchase option.")
+                        Text(L("upgrade.loadfailed"))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
-                        Text("Please check your connection and try again.")
+                        Text(L("upgrade.checkconnection"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
-                        Button("Try Again") {
+                        Button(L("upgrade.tryagain")) {
                             Task { await purchaseManager.loadProduct() }
                         }
                         .buttonStyle(.bordered)
                     }
                 } else {
-                    ProgressView("Loading...")
+                    ProgressView(L("upgrade.loading"))
                 }
 
                 Button {
                     Task { await purchaseManager.restorePurchases() }
                 } label: {
-                    Text("Restore Purchase")
+                    Text(L("upgrade.restore"))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }

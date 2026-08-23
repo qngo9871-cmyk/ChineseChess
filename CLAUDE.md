@@ -25,6 +25,49 @@ Janggi's copy needs the same fix (it has diverged since — Janggi's elephant ca
 Xiangqi's can't — so don't assume the files are still identical, diff first).
 
 ## Current State
+- **2026-08-24 — v1.0.7 (build 17), full remediation pass, SUBMITTED.** Found by the new
+  portfolio-wide `~/asc-tools/compliance_gate.py`: this app had the DEBUG isPro
+  double-gating bug, zero onboarding, zero in-app localization despite a real zh-Hant ASC
+  listing since v1.0.4, and (found only via manual testing, not the gate) a genuine iPad
+  layout bug. Fixed all four:
+  - **DEBUG isPro double-gating**: `PurchaseManager.updateEntitlementStatus()`'s bare
+    `isPro = true` replaced with the same capture-mode-exempted pattern already used in
+    SamLoc/Fanorona/Dara/Surakarta (`isPro = CC_CAPTURE != nil && CC_CAPTURE != "home"`).
+  - **Onboarding**: built `Views/OnboardingView.swift`, a 4-page walkthrough (two-phase
+    structure, the 九宮 palace restriction, the seven piece types, checkmate), wired via
+    `hasSeenOnboarding` in `ChineseChessApp.swift`'s new `rootView`, re-accessible from
+    Home via "How to Play".
+  - **Real in-app localization**: built `Core/Localization.swift` (manual bundle-swap
+    `LocalizationManager`, same pattern as Dara/Surakarta/Klotski) plus `en.lproj`/
+    `zh-Hant.lproj` `Localizable.strings` (Traditional, matching the existing ASC listing
+    locale — not zh-Hans like most of the portfolio). Every user-facing string in
+    HomeView/GameView/UpgradeView/OnboardingView now routes through `L()`; grammar-trap
+    templates (`game.wins`/`game.turn`/`game.incheck`) use `String(format:)` substitution,
+    not concatenation, after the SamLoc "You wins" bug class.
+  - **iPad layout bug, found via actual iPad-simulator testing (not just the gate)**:
+    `GameView.cellSize(in:)` computed board-cell size from a fixed `boardPadding` (24pt)
+    that didn't scale with cellSize. On iPhone this was invisible (cellSize small enough
+    that piece radius stayed under 24pt), but on iPad's much larger canvas the outermost
+    column of pieces — drawn as circles centered on the edge grid lines — extended tens of
+    points past the fixed margin and clipped off-screen on both sides. **First attempt was
+    wrong**: tried fixing this by restricting `TARGETED_DEVICE_FAMILY` to iPhone-only, but
+    Apple rejected the upload (error 90101) — you cannot drop a previously-declared device
+    family in an update, ever. Reverted to `"1,2"` and instead fixed the actual math:
+    `cellSize` now divides by `(columns-1+pieceScale)` instead of `(columns-1)`, reserving
+    piece-radius margin proportional to cellSize rather than a fixed constant. Verified via
+    real iPad Pro 13" and iPhone 17 Pro Max simulator screenshots, no clipping either device,
+    no regression.
+  - Also fixed a missing `AccentColor` (silent build warning, unrelated pre-existing gap)
+    and recaptured all 5 marketing screenshots in both `en`/`zh-Hant` via new
+    `capture_shots.py` (replaces the old `/Users/user/ChineseChess`-hardcoded stale one) —
+    zh-Hant had **zero** screenshots on every version ever shipped until now.
+  - Bumped `MARKETING_VERSION` 1.0.6→**1.0.7**, `CURRENT_PROJECT_VERSION` 16→**17**.
+    Archived/exported/uploaded via API-key auth, `new_version.py` + zh-Hant `whatsNew`
+    patch + `asc_push_chinesechess_screenshots.py` (new) + one-off `reviewSubmissions`
+    calls. Pro IAP already `APPROVED`, no re-tick needed (routine update). **SUBMITTED,
+    WAITING_FOR_REVIEW** — app `6762035708`, version `1.0.7` (id
+    `46429af6-e673-433a-a2ca-5fd3ea9034e9`), build `17`/`603d75e3-8537-49d3-8e51-bd0851cb229c`
+    attached, reviewSubmission `84cfad89-cd97-4e68-9a5b-2dde5e483710`.
 - **2026-08-09 — v1.0.6 (build 16), 7-day free-trial paywall pilot, SUBMITTED.** Sales-report analysis showed 43 downloads with zero IAP conversions, while sibling apps in the portfolio convert at 2-11% from similar/smaller volumes — ruled out a broken-purchase bug (IAP `state=APPROVED`, paywall correctly wired into `HomeView`) and concluded the free-forever Beginner AI difficulty was satisfying casual players with no reason to upgrade. Added a 7-day trial clock (`PurchaseManager.trialActive`/`trialDaysRemaining`, backed by a `firstLaunchDate` UserDefaults key) — during the trial the app behaves exactly as before, but once it expires `HomeView.isLocked(_:)` now gates **Beginner difficulty too**, not just Medium/Expert/Play vs Friend. Existing installs (no stored `firstLaunchDate` from a pre-trial build) get the clock started by this update rather than being locked out immediately. `UpgradeView` copy switches to "Your Free Trial Has Ended" once the trial is over. Verified both trial-active and trial-expired UI states live in Simulator (temporarily shortened `trialDuration` for the expired-state screenshot, then reverted before shipping — see git diff for the real 7-day constant). Bumped MARKETING_VERSION 1.0.5→1.0.6 / CURRENT_PROJECT_VERSION 15→16. Archived/exported/uploaded via API-key auth, submitted via `new_version.py` + one-off `reviewSubmissions` calls (zh-Hant localization needed its own `whatsNew` patch again, same gotcha as v1.0.5). **SUBMITTED, WAITING_FOR_REVIEW** — app `6762035708`, version `1.0.6` (id `b148c198-350e-4026-8ac7-b99f7bd4584f`), build `16`/`bd2d7064-f451-4e10-b977-e9eb351a6d0d` attached, reviewSubmission `902e0225-8fb3-4cfa-9d49-513ada7171ba`. **This is a portfolio pilot** — 17 other apps share the same free-tier-forever + `requiresPro` pattern (Janggi, Makruk, Hanafuda Koi-Koi, Shogi Do, Fanorona, SamLoc, Pallanguzhi, Igisoro, Omweso, ToguzKorgool, Surakarta, Dara, Bao, Chan, CoCaNgua, OAnQuan, PhomTaLa, SapXam, TienLen) but the user chose to wait ~2-3 weeks for real conversion data on this app before deciding whether to roll it out further. See memory `project_chinesechess_trial_paywall_pilot`.
 - **2026-08-03 — v1.0.5 (build 15), critical checkmate-detection bug fix, SUBMITTED.** A user reported the AI (Beginner difficulty) declaring checkmate after only a move or two. Root-caused to `Board.isInCheck` in `ChineseChess/Core/Board.swift`: the horse ("knight") check-detection pattern computed the blocking-leg square with every offset **sign-inverted** — it checked the mirror-image square instead of the real blocking point. Verified via an independent Python port cross-validated against a from-scratch ground-truth checker (raw-move reverse lookup) over 500 random games (80 plies each): the bug caused **49 divergences** — both false checks/checkmates (a blocked horse still counted as checking) and missed real checks/checkmates (an unblocked horse not counted). This affects **every difficulty level**, not just Beginner, since all three share the same `Board.isInCheck`/`hasAnyLegalMove` code path — Beginner's high blunder rate (25%) and the AI's endgame "mate drive" (which deliberately marches horses toward the enemy general once material-ahead, see `AIEngine.evaluate`) just made it manifest fastest there. Fixed the leg-offset signs in the `horseMoves` tuple list; re-validated the same 500-game harness at **0 mismatches** against ground truth, and confirmed no other divergences exist in chariot/cannon/soldier/flying-general check logic (also cross-validated, 0 mismatches). Confirmed literal "checkmate on move 1" is not reproducible (no piece can reach horse-check range of the opponent's general in one ply) — the user's report was an early-but-not-first-move occurrence. Bumped MARKETING_VERSION 1.0.4→1.0.5 / CURRENT_PROJECT_VERSION 14→15. Archived/exported/uploaded via API-key auth (see `ExportOptions.plist`, newly added — this app didn't have one before); submission via `new_version.py` + one-off `reviewSubmissions` calls (Pro IAP already approved → no re-tick, no screenshot changes needed for a pure bug-fix release). **SUBMITTED, WAITING_FOR_REVIEW** — app `6762035708`, version `1.0.5` (id `dad331ea-e681-4028-8f26-b2ec078b960d`), build `15`/`e95822ce-6152-4eea-83aa-1aedc067b7a1` attached, reviewSubmission `03a5a74c-bc7c-4421-9308-35fa24a9d880`. Note: this version also carries the zh-Hant localization from v1.0.4 (added 2026-07-08) — its `whatsNew` needed setting separately from `en-US` (translated release note) since `new_version.py` only patches the `en*` locale; any future non-English-only submission via that script needs the same manual follow-up per extra locale, or the script should be extended to loop all locales.
 - **2026-07-07 — v1.0.3 (build 13) screenshot rework, SUBMITTED (WAITING_FOR_REVIEW).** New 5-shot best-first set in `screenshots/v2/` (home / authentic board / developed opening / tap-to-see-legal-moves / mid-battle; cinnabar band) via `capture_shots.py` at repo root. Added `CC_CAPTURE=home|board|opening|select|midgame` DEBUG hook: `GameModel.captureSetup` (a `playOpening` 8-move all-legal development sequence + development-biased legal `selfPlay` + `forceSelect` to show legal-move dots) driven from `GameView`/`HomeView` `onAppear` — all `#if DEBUG`, inert in production. DEBUG forces isPro (no locks). Bumped pbxproj MARKETING_VERSION 1.0.2→1.0.3 / CURRENT_PROJECT_VERSION 12→13. Resubmitted via `~/asc-tools/new_version.py` + `replace_shots.py` (Pro IAP already approved → no re-tick).

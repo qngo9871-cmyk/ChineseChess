@@ -45,8 +45,8 @@ struct GameView: View {
         .background(Color(red: 0.96, green: 0.89, blue: 0.72).ignoresSafeArea())
         .navigationBarTitleDisplayMode(.inline)
         .alert(endAlertTitle, isPresented: $showEndAlert) {
-            Button("New Game") { resetGame() }
-            Button("OK", role: .cancel) { }
+            Button(L("game.newgame")) { resetGame() }
+            Button(L("game.ok"), role: .cancel) { }
         }
         .onChange(of: game.gameState) {
             if game.gameState == .checkmate || game.gameState == .stalemate {
@@ -80,18 +80,19 @@ struct GameView: View {
     }
 
     private var turnText: String {
+        let colorName = game.currentTurn == .red ? L("game.red") : L("game.black")
         switch game.gameState {
         case .checkmate:
             if let w = game.winner {
-                return w == .red ? "Red wins!" : "Black wins!"
+                return String(format: L("game.wins"), w == .red ? L("game.red") : L("game.black"))
             }
-            return "Checkmate"
+            return L("game.checkmate")
         case .stalemate:
-            return "Stalemate — Draw"
+            return L("game.stalemate")
         case .check:
-            return (game.currentTurn == .red ? "Red" : "Black") + " is in CHECK"
+            return String(format: L("game.incheck"), colorName)
         case .playing:
-            return (game.currentTurn == .red ? "Red" : "Black") + "'s turn"
+            return String(format: L("game.turn"), colorName)
         }
     }
 
@@ -99,9 +100,9 @@ struct GameView: View {
 
     private var buttonBar: some View {
         HStack(spacing: 24) {
-            Button("New Game") { resetGame() }
+            Button(L("game.newgame")) { resetGame() }
                 .buttonStyle(.bordered)
-            Button("Resign") { resignGame() }
+            Button(L("game.resign")) { resignGame() }
                 .buttonStyle(.bordered)
                 .disabled(game.gameState == .checkmate || game.gameState == .stalemate)
         }
@@ -260,11 +261,11 @@ struct GameView: View {
         switch game.gameState {
         case .checkmate:
             if let w = game.winner {
-                return w == .red ? "Red wins by checkmate!" : "Black wins by checkmate!"
+                return String(format: L("game.winsbycheckmate"), w == .red ? L("game.red") : L("game.black"))
             }
-            return "Checkmate!"
+            return L("game.checkmatebang")
         case .stalemate:
-            return "Stalemate — Draw!"
+            return L("game.stalematebang")
         default:
             return ""
         }
@@ -273,8 +274,15 @@ struct GameView: View {
     // MARK: - Layout helpers
 
     private func cellSize(in size: CGSize) -> CGFloat {
-        let w = (size.width  - boardPadding * 2) / CGFloat(Board.columns - 1)
-        let h = (size.height - boardPadding * 2) / CGFloat(Board.rows - 1)
+        // Pieces are drawn as circles centered on grid lines with diameter
+        // cellSize * pieceScale, so the outermost column/row of pieces extends
+        // cellSize * pieceScale / 2 beyond the last grid line on every edge. A
+        // fixed boardPadding alone isn't enough margin once cellSize scales up
+        // on a larger canvas — reserve space proportional to piece radius too,
+        // or edge pieces clip off-screen. Found 2026-08-24 on iPad (App Store
+        // review had never actually exercised that device family before).
+        let w = (size.width  - boardPadding * 2) / (CGFloat(Board.columns - 1) + pieceScale)
+        let h = (size.height - boardPadding * 2) / (CGFloat(Board.rows - 1) + pieceScale)
         return min(w, h)
     }
 

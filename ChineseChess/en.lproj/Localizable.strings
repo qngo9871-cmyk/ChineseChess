@@ -1,0 +1,57 @@
+/* Home */
+"home.title" = "Chinese Chess";
+"home.trial" = "Free trial — %d day(s) left";
+"home.difficulty" = "Difficulty";
+"home.playvsai" = "Play vs AI";
+"home.playvsfriend" = "Play vs Friend";
+"home.howtoplay" = "How to Play";
+
+/* Difficulty levels */
+"difficulty.beginner" = "Beginner";
+"difficulty.medium" = "Medium";
+"difficulty.expert" = "Expert";
+
+/* Upgrade feature descriptions */
+"upgrade.feature.difficulty" = "%@ difficulty";
+
+/* In-game */
+"game.newgame" = "New Game";
+"game.ok" = "OK";
+"game.resign" = "Resign";
+"game.red" = "Red";
+"game.black" = "Black";
+"game.wins" = "%@ wins!";
+"game.checkmate" = "Checkmate";
+"game.stalemate" = "Stalemate — Draw";
+"game.incheck" = "%@ is in CHECK";
+"game.turn" = "%@'s turn";
+"game.winsbycheckmate" = "%@ wins by checkmate!";
+"game.checkmatebang" = "Checkmate!";
+"game.stalematebang" = "Stalemate — Draw!";
+
+/* Upgrade / paywall */
+"upgrade.title" = "Unlock Full Game";
+"upgrade.title.trialended" = "Your Free Trial Has Ended";
+"upgrade.subtitle" = "%@ is available with the full version.";
+"upgrade.subtitle.trialended" = "Your 7-day free trial is over. Unlock the full game to keep playing %@.";
+"upgrade.whatyouget" = "What you get:";
+"upgrade.feature1" = "Beginner, Medium & Expert AI";
+"upgrade.feature2" = "Play vs Friend mode";
+"upgrade.unlock" = "Unlock Full Game — %@";
+"upgrade.loadfailed" = "Unable to load purchase option.";
+"upgrade.checkconnection" = "Please check your connection and try again.";
+"upgrade.tryagain" = "Try Again";
+"upgrade.loading" = "Loading...";
+"upgrade.restore" = "Restore Purchase";
+
+/* Onboarding */
+"onboarding.page1.title" = "Two Armies, One River";
+"onboarding.page1.body" = "Xiangqi is a 2,000-year-old Chinese strategy game for two players, played on a 9×10 grid split by a river. Capture the opposing General to win.";
+"onboarding.page2.title" = "The General's Palace";
+"onboarding.page2.body" = "Each side has a 3×3 palace. The General and Advisors can never leave it — the General also can't face the enemy General down an open file.";
+"onboarding.page3.title" = "Seven Kinds of Pieces";
+"onboarding.page3.body" = "Chariots move like a rook. Cannons move the same way but capture only by jumping exactly one piece. Horses move in an L-shape and can be blocked. Elephants can't cross the river.";
+"onboarding.page4.title" = "Capture the General";
+"onboarding.page4.body" = "Checkmate the opposing General to win — trap it with no legal move left. A red \"CHECK\" warning tells you when a General is under direct threat.";
+"onboarding.next" = "Next";
+"onboarding.start" = "Start Playing";
