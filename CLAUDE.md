@@ -34,10 +34,17 @@ Xiangqi's can't — so don't assume the files are still identical, diff first).
   (widened to `maxWidth: 340`) and `capture_shots.py` (added `simctl erase` for
   deterministic trial-day capture + an 8s settle wait to avoid a first-boot system
   notification landing in frame). Recaptured and verified all 10 screenshots (5 ×
-  en/zh-Hant) — no truncation, no stray UI. **Not yet pushed to ASC** — v1.0.7 is
-  `WAITING_FOR_REVIEW`; whether its screenshots can still be updated mid-review (vs.
-  needing to wait for this cycle to resolve, or ship in the next version) needs the
-  user's call before touching App Store Connect.
+  en/zh-Hant) — no truncation, no stray UI. **Pulled, fixed, and resubmitted per
+  standing user policy** (found post-submit bug → cancel → fix → resubmit, applies to
+  all apps): canceled the v1.0.7 reviewSubmission (`84cfad89-...`,
+  `CANCELING`→`COMPLETE`, version dropped to `DEVELOPER_REJECTED`), bumped to
+  **v1.0.8 (build 18)**, archived/exported/uploaded (Delivery UUID
+  `380f0fb2-5298-4f75-98ec-1df5906a9472`, processed `VALID`), attached to the same
+  appStoreVersion record (versionString PATCHed 1.0.7→1.0.8), pushed the corrected
+  screenshots via `asc_push_chinesechess_screenshots.py`, updated `whatsNew` (both
+  locales, describes the fix), created a new reviewSubmission
+  `2ad90172-3e30-42d8-a0f7-62447ae6e003` and submitted. **Verified: WAITING_FOR_REVIEW
+  as v1.0.8.**
 - **2026-08-24 — v1.0.7 (build 17), full remediation pass, SUBMITTED.** Found by the new
   portfolio-wide `~/asc-tools/compliance_gate.py`: this app had the DEBUG isPro
   double-gating bug, zero onboarding, zero in-app localization despite a real zh-Hant ASC
