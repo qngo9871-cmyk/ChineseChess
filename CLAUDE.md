@@ -25,6 +25,19 @@ Janggi's copy needs the same fix (it has diverged since — Janggi's elephant ca
 Xiangqi's can't — so don't assume the files are still identical, diff first).
 
 ## Current State
+- **2026-08-24 (later same day) — vision QA found the v1.0.7 submission's own home
+  screenshot has a real UI bug: the difficulty picker's `.frame(maxWidth: 280)`
+  truncates "Beginner/Medium/Expert" to "Begin…/Mediu… 🔒/Expert 🔒" once Medium+Expert
+  both show their (permanent, trial-unaffected) lock icon — this is the *normal*
+  state for this app, not just a post-trial edge case, so **the screenshot that
+  already shipped to ASC on v1.0.7 shows this bug**. Fixed `Views/HomeView.swift`
+  (widened to `maxWidth: 340`) and `capture_shots.py` (added `simctl erase` for
+  deterministic trial-day capture + an 8s settle wait to avoid a first-boot system
+  notification landing in frame). Recaptured and verified all 10 screenshots (5 ×
+  en/zh-Hant) — no truncation, no stray UI. **Not yet pushed to ASC** — v1.0.7 is
+  `WAITING_FOR_REVIEW`; whether its screenshots can still be updated mid-review (vs.
+  needing to wait for this cycle to resolve, or ship in the next version) needs the
+  user's call before touching App Store Connect.
 - **2026-08-24 — v1.0.7 (build 17), full remediation pass, SUBMITTED.** Found by the new
   portfolio-wide `~/asc-tools/compliance_gate.py`: this app had the DEBUG isPro
   double-gating bug, zero onboarding, zero in-app localization despite a real zh-Hant ASC

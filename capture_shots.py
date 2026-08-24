@@ -58,12 +58,14 @@ def main():
     print(f"==> device {name}")
     app = build_app()
     subprocess.run(["xcrun", "simctl", "shutdown", device], capture_output=True)
+    subprocess.run(["xcrun", "simctl", "erase", device], capture_output=True)
     subprocess.run(["xcrun", "simctl", "boot", device], capture_output=True)
     sh("xcrun", "simctl", "bootstatus", device, "-b")
     subprocess.run(["xcrun", "simctl", "status_bar", device, "override", "--time", "9:41",
                      "--batteryLevel", "100", "--batteryState", "charged",
                      "--cellularBars", "4", "--wifiBars", "3"], capture_output=True)
     sh("xcrun", "simctl", "install", device, str(app))
+    time.sleep(8)  # let a first-boot "Ready for Apple Intelligence" banner auto-dismiss (2026-08-24)
 
     for lang_dir, app_lang in LANGUAGES.items():
         out = APP_DIR / "screenshots" / "final" / lang_dir
@@ -75,6 +77,7 @@ def main():
         # container instead.
         subprocess.run(["xcrun", "simctl", "uninstall", device, BUNDLE], capture_output=True)
         sh("xcrun", "simctl", "install", device, str(app))
+        time.sleep(8)  # let a first-boot "Ready for Apple Intelligence" banner auto-dismiss (2026-08-24)
         sh("xcrun", "simctl", "launch", device, BUNDLE,
            env=dict(os.environ, SIMCTL_CHILD_CC_SKIP_ONBOARDING="1"))
         time.sleep(2)
