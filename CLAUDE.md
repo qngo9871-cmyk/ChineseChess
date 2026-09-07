@@ -25,6 +25,25 @@ Janggi's copy needs the same fix (it has diverged since — Janggi's elephant ca
 Xiangqi's can't — so don't assume the files are still identical, diff first).
 
 ## Current State
+- **2026-09-07 (later same day) — v1.0.9 (build 19) submitted, WAITING_FOR_REVIEW,
+  carrying the Vietnamese localization below.** Bumped `MARKETING_VERSION`
+  1.0.8→1.0.9, `CURRENT_PROJECT_VERSION` 18→19 directly in `project.pbxproj`
+  (no `project.yml` here). Archived/exported/uploaded via the same API-key
+  pattern as prior versions — Distribution signing verified
+  (`Authority=Apple Distribution: Quyen Ngo (SM99L22Q84)`) before upload,
+  build 19 confirmed `VALID` (delivery UUID `a1c8a37d-a09e-45d0-8e82-67c37828bd82`
+  matched exactly against the polled build ID). New appStoreVersion
+  `b6ee4e7c-55f5-4de7-8fd2-05a92e2fbcb4` created — **both `en-US` and
+  `zh-Hant` `whatsNew` came back empty** (not auto-copied) and needed
+  patching separately, same recurring gotcha as v1.0.5/v1.0.6 noted below.
+  Build attached (verified via follow-up GET), review submission
+  `0bd9ee4e-965e-4dd9-97ae-833cfad1e29a` created and submitted — Pro IAP
+  already `APPROVED` from a prior release, routine update, no manual
+  web-UI tick-in needed. **Independently verified**: reviewSubmission state
+  `WAITING_FOR_REVIEW`, appStoreVersion 1.0.9 state `WAITING_FOR_REVIEW`,
+  1.0.8 confirmed still `READY_FOR_SALE` — live app fully unaffected while
+  this review is pending.
+
 - **2026-09-07 — Vietnamese (vi) added as a third in-app language, alongside
   existing en/zh-Hant.** User-requested: Xiangqi (Cờ Tướng) has a real,
   established audience in Vietnam. `Core/Localization.swift`'s `AppLanguage`
