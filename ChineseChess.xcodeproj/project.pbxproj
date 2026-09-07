@@ -46,6 +46,7 @@
 		C20000020000000000000002 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		C20000030000000000000003 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C20000040000000000000004 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C20000050000000000000005 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +166,7 @@
 			knownRegions = (
 				en,
 				"zh-Hant",
+				vi,
 				Base,
 			);
 			mainGroup = A50000010000000000000001;
@@ -219,6 +221,7 @@
 			children = (
 				C20000030000000000000003 /* en */,
 				C20000040000000000000004 /* zh-Hant */,
+				C20000050000000000000005 /* vi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

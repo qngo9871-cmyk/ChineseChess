@@ -4,8 +4,15 @@ import SwiftUI
 enum AppLanguage: String, CaseIterable, Identifiable {
     case en
     case zhHant = "zh-Hant"
+    case vi
     var id: String { rawValue }
-    var displayName: String { self == .en ? "English" : "繁體中文" }
+    var displayName: String {
+        switch self {
+        case .en: return "English"
+        case .zhHant: return "繁體中文"
+        case .vi: return "Tiếng Việt"
+        }
+    }
 }
 
 /// Manual bundle-swap localizer so the in-app language can change at runtime
@@ -33,7 +40,9 @@ final class LocalizationManager: ObservableObject {
 
     private static func systemDefault() -> AppLanguage {
         let preferred = Locale.preferredLanguages.first ?? "en"
-        return preferred.hasPrefix("zh") ? .zhHant : .en
+        if preferred.hasPrefix("zh") { return .zhHant }
+        if preferred.hasPrefix("vi") { return .vi }
+        return .en
     }
 
     private static func bundle(for lang: AppLanguage) -> Bundle {

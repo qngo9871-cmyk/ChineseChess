@@ -1,0 +1,57 @@
+/* Home */
+"home.title" = "Cờ Tướng";
+"home.trial" = "Dùng thử miễn phí — còn %d ngày";
+"home.difficulty" = "Độ khó";
+"home.playvsai" = "Chơi với Máy";
+"home.playvsfriend" = "Chơi với Bạn";
+"home.howtoplay" = "Cách Chơi";
+
+/* Difficulty levels */
+"difficulty.beginner" = "Sơ Cấp";
+"difficulty.medium" = "Trung Cấp";
+"difficulty.expert" = "Cao Cấp";
+
+/* Upgrade feature descriptions */
+"upgrade.feature.difficulty" = "Cấp độ %@";
+
+/* In-game */
+"game.newgame" = "Ván Mới";
+"game.ok" = "OK";
+"game.resign" = "Đầu Hàng";
+"game.red" = "Đỏ";
+"game.black" = "Đen";
+"game.wins" = "%@ Thắng!";
+"game.checkmate" = "Chiếu Bí";
+"game.stalemate" = "Hết Nước Đi — Hòa";
+"game.incheck" = "%@ Đang Bị Chiếu";
+"game.turn" = "Đến Lượt %@";
+"game.winsbycheckmate" = "%@ Thắng Bằng Chiếu Bí!";
+"game.checkmatebang" = "Chiếu Bí!";
+"game.stalematebang" = "Hết Nước Đi — Hòa!";
+
+/* Upgrade / paywall */
+"upgrade.title" = "Mở Khóa Toàn Bộ Game";
+"upgrade.title.trialended" = "Bản Dùng Thử Đã Kết Thúc";
+"upgrade.subtitle" = "%@ chỉ có trong bản đầy đủ.";
+"upgrade.subtitle.trialended" = "Bản dùng thử 7 ngày đã kết thúc. Mở khóa toàn bộ game để tiếp tục chơi %@.";
+"upgrade.whatyouget" = "Bạn sẽ nhận được:";
+"upgrade.feature1" = "AI Sơ Cấp, Trung Cấp & Cao Cấp";
+"upgrade.feature2" = "Chế độ Chơi với Bạn";
+"upgrade.unlock" = "Mở Khóa Toàn Bộ Game — %@";
+"upgrade.loadfailed" = "Không thể tải tùy chọn mua hàng.";
+"upgrade.checkconnection" = "Vui lòng kiểm tra kết nối và thử lại.";
+"upgrade.tryagain" = "Thử Lại";
+"upgrade.loading" = "Đang Tải...";
+"upgrade.restore" = "Khôi Phục Giao Dịch Mua";
+
+/* Onboarding */
+"onboarding.page1.title" = "Hai Đạo Quân, Một Dòng Sông";
+"onboarding.page1.body" = "Cờ Tướng là trò chơi chiến thuật Trung Hoa hơn 2.000 năm tuổi dành cho hai người chơi, diễn ra trên bàn cờ 9×10 được chia đôi bởi một dòng sông. Bắt được Tướng của đối phương để giành chiến thắng.";
+"onboarding.page2.title" = "Cung Của Tướng";
+"onboarding.page2.body" = "Mỗi bên có một cung 3×3. Tướng và Sĩ không bao giờ được rời khỏi cung — Tướng cũng không được đối mặt trực tiếp với Tướng đối phương trên cùng một cột trống.";
+"onboarding.page3.title" = "Bảy Loại Quân Cờ";
+"onboarding.page3.body" = "Xe di chuyển như quân xe trong cờ vua. Pháo di chuyển tương tự nhưng chỉ ăn quân khi nhảy qua đúng một quân cờ. Mã di chuyển theo hình chữ L và có thể bị cản. Tượng không được qua sông.";
+"onboarding.page4.title" = "Bắt Được Tướng";
+"onboarding.page4.body" = "Chiếu bí Tướng đối phương để giành chiến thắng — dồn Tướng vào thế không còn nước đi hợp lệ nào. Cảnh báo màu đỏ \"CHIẾU\" sẽ báo cho bạn biết khi Tướng đang bị đe dọa trực tiếp.";
+"onboarding.next" = "Tiếp Theo";
+"onboarding.start" = "Bắt Đầu Chơi";

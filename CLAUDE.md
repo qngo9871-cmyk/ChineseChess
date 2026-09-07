@@ -25,6 +25,56 @@ Janggi's copy needs the same fix (it has diverged since — Janggi's elephant ca
 Xiangqi's can't — so don't assume the files are still identical, diff first).
 
 ## Current State
+- **2026-09-07 — Vietnamese (vi) added as a third in-app language, alongside
+  existing en/zh-Hant.** User-requested: Xiangqi (Cờ Tướng) has a real,
+  established audience in Vietnam. `Core/Localization.swift`'s `AppLanguage`
+  enum gained a `.vi` case (`displayName: "Tiếng Việt"`), `systemDefault()`
+  now also detects a `vi`-prefixed system locale, and a new
+  `vi.lproj/Localizable.strings` (37 keys, matching every key in
+  `en.lproj`/`zh-Hant.lproj`) was added and wired into the manual `.xcodeproj`
+  (this project has no XcodeGen `project.yml` — file reference + variant
+  group + `knownRegions` all hand-edited in `project.pbxproj`). `home.title`
+  was translated as **"Cờ Tướng"**, the actual Vietnamese name for this game
+  (not a literal "Chinese Chess" translation) — both more accurate and better
+  for in-country App Store search. Xiangqi-specific terms use their real
+  Vietnamese chess vocabulary, not generic translations: "Chiếu" (check),
+  "Chiếu Bí" (checkmate), "Tướng" (General), "Sĩ" (Advisor), "Mã" (Horse),
+  "Tượng" (Elephant), "Pháo" (Cannon), "Xe" (Chariot). Difficulty tiers use
+  the idiomatic Vietnamese education/game triplet Sơ Cấp/Trung Cấp/Cao Cấp
+  (Beginner/Intermediate/Advanced) rather than a literal word-for-word
+  rendering. The existing `LanguageSwitcher` (custom SwiftUI, not a bound
+  `Picker` — already immune to this portfolio's Picker/`$loc.language`
+  desync bug class) needed no changes; it iterates `AppLanguage.allCases`
+  and just gained a third segment automatically.
+
+  **Machine-assisted, not native-speaker reviewed** — same honesty
+  disclosure as this portfolio's other regional-language locales (Bao's
+  Kiswahili, Fanorona's Malagasy). Confidence is reasonable on short UI
+  strings and correct on the well-known Xiangqi terminology; the four
+  onboarding paragraphs are the least-reviewed prose. **Follow-up: native
+  Vietnamese speaker review recommended before wide release**, especially
+  given the developer's stated read that Vietnamese players are a genuinely
+  motivated audience for this specific game.
+
+  Verified via a real build (not assumed): `xcodebuild ... build` →
+  **BUILD SUCCEEDED**, then confirmed `en.lproj`/`zh-Hant.lproj`/`vi.lproj`
+  are all three present inside the compiled `.app` bundle. Re-ran
+  `compliance_gate.py ChineseChess` afterward — `localization` now shows
+  `['en.lproj', 'vi.lproj', 'zh-Hant.lproj'], 37 in-app localized string
+  call(s)`, no regressions on the other 6 checks (the `device-family` FAIL is
+  a known false-positive — iPad support is permanent since Apple's error
+  90101 blocks ever un-declaring a device family, and the real clipping bug
+  behind that flag was already fixed properly in the v1.0.7 pass below).
+
+  **Note: this is in-app UI localization only.** The ASC App Store *listing*
+  itself (description, keywords, screenshots) has real `en`/`zh-Hant`
+  locales but no Vietnamese storefront locale yet — Apple's supported ASC
+  locale list does include Vietnamese, so a full treatment (translated
+  listing + Vietnamese marketing screenshots) is a legitimate follow-up if
+  the user wants Vietnamese users to discover the app via App Store search
+  in their own language, not just play in it once installed. Not done this
+  pass — scoped as in-app only per the immediate ask.
+
 - **2026-08-24 (later same day) — vision QA found the v1.0.7 submission's own home
   screenshot has a real UI bug: the difficulty picker's `.frame(maxWidth: 280)`
   truncates "Beginner/Medium/Expert" to "Begin…/Mediu… 🔒/Expert 🔒" once Medium+Expert
